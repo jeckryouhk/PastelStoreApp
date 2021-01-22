@@ -23,27 +23,37 @@ const Authen = ({ navigation }) => {
 
     const checkPremission = async () => {
         const user_str = await AsyncStorage.getItem('@user')
-        const user = JSON.parse(user_str)
-        if (user.user_code == undefined) {
+
+        if (user_str == null) {
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginNavigator' }],
             });
         } else {
-            navigation.reset({
-                index: 0,
-                routes: [{
-                    name: 'MainNavigator',
-                    params: {
-                        screen: 'MainTabs',
+            const user = JSON.parse(user_str)
+            if (user.user_code == undefined) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'LoginNavigator' }],
+                });
+            } else {
+                navigation.reset({
+                    index: 0,
+                    routes: [{
+                        name: 'MainNavigator',
                         params: {
-                            screen: 'ProductSearch',
-                            params: {},
-                        },
-                    }
-                }],
-            });
+                            screen: 'MainTabs',
+                            params: {
+                                screen: 'ProductSearch',
+                                params: {},
+                            },
+                        }
+                    }],
+                });
+            }
         }
+
+
     }
 
     return (
